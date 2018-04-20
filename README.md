@@ -1,8 +1,8 @@
 # WalletConnect
 
-Wallet connect library for web and node.js. Works fine with react-native.
+Simple library to connect with wallet-connect's bridge server. Works with browsers, node.js and react-native.
 
-WalletConnect protocol - http://walletconnect.org/
+You can read more about WalletConnect protocol here: http://walletconnect.org/
 
 ## install
 

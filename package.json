@@ -1,30 +1,27 @@
 {
   "name": "walletconnect",
   "version": "0.0.1-beta.1",
-  "description": "Library to connect with wallet-connect bridge server for browsers and node.js",
+  "description":
+    "Library to connect with wallet-connect bridge server for browsers and node.js",
   "main": "lib/library.js",
   "scripts": {
     "build": "webpack --env dev && webpack --env build && npm run test",
     "dev": "webpack --progress --colors --watch --env dev",
     "test": "mocha --require babel-core/register --colors ./test/*.spec.js",
-    "test:watch": "mocha --require babel-core/register --colors -w ./test/*.spec.js"
+    "test:watch":
+      "mocha --require babel-core/register --colors -w ./test/*.spec.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jdkanani/walletconnect.git"
+    "url": "https://github.com/maticnetwork/walletconnect.git"
   },
-  "keywords": [
-    "wallet",
-    "react-native",
-    "walletconnect",
-    "react"
-  ],
+  "keywords": ["wallet", "react-native", "walletconnect", "react"],
   "author": "Jaynti Kanani <jdkanani@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jdkanani/walletconnect/issues"
+    "url": "https://github.com/maticnetwork/walletconnect/issues"
   },
-  "homepage": "https://github.com/jdkanani/walletconnect",
+  "homepage": "https://github.com/maticnetwork/walletconnect",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
