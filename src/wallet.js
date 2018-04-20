@@ -61,7 +61,6 @@ export default class WalletConnect {
 
     // compare buffers
     if (Buffer.compare(chmacBuffer, hmacBuffer) !== 0) {
-      console.log('Data has been tampered with.')
       return null
     }
 
