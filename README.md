@@ -13,12 +13,23 @@ npm install --save walletconnect # yarn add walletconnect
 ## Example
 
 ```js
-import WalletConnect from 'walletconnect'
+import {generateKey, WalletConnector} from 'walletconnect'
 
-const sharedKey = WalletConnect.generateSharedKey()
-const walletConnect = new WalletConnect(sharedKey)
+// create shared key
+const sharedKey = await generateKey()
 
-const data = {address: '0x123'}
-const encryptedObj = walletConnect.encrypt(JSON.stringify(data))
-const decrypted = JSON.parse(walletConnect.decrypt(obj).data)
+// create wallet connector
+const walletConnector = new WalletConnector(
+  'https://walletconnect.matic.network',
+  sharedKey
+)
+
+// data
+const data = {address: '0x0'}
+
+// encrypted object
+const encryptedObj = await walletConnector.encrypt(data)
+
+// decrypted data
+const decrypted = walletConnector.decrypt(obj).data
 ```

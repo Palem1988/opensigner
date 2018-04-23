@@ -1,32 +1,68 @@
 import crypto from 'crypto'
+import Frisbee from 'frisbee'
 
-import {generateKey as _generateKey} from './utils'
+import {generateKey} from './utils'
 
 const AES_ALGORITHM = 'AES-256-CBC'
 const HMAC_ALGORITHM = 'SHA256'
 
-export default class WalletConnect {
-  constructor(key) {
-    this._sharedKey = key
+export default class Connector {
+  constructor(url, key) {
+    // set bridge url and key
+    this.bridgeURL = url
+    this.sharedKey = key
+
+    // counter
     this._counter = 0
+
+    // frisbee instance
+    this._frisbeeInstance = new Frisbee({
+      baseURI: url,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
   }
 
-  encrypt(data, customIv = null) {
-    if (!this._sharedKey) {
+  get bridgeURL() {
+    return this._bridgeURL
+  }
+
+  set bridgeURL(url) {
+    this._bridgeURL = url
+  }
+
+  get sharedKey() {
+    return this._sharedKey
+  }
+
+  set sharedKey(key) {
+    this._sharedKey = key
+  }
+
+  async encrypt(data, customIv = null) {
+    const key = this.sharedKey
+    if (!key) {
       throw new Error(
-        'Shared key is required. Please use `setSharedKey` before using encryption'
+        'Shared key is required. Please use `sharedKey` before using encryption'
       )
     }
 
-    const key = this._sharedKey
-    const iv = Buffer.from(customIv || _generateKey())
-    const actualContent = JSON.stringify({
-      data: data,
-      counter: this._counter
-    })
+    // use custom iv or generate one
+    let rawIv = customIv
+    if (!rawIv) {
+      rawIv = await generateKey(128 / 8)
+    }
+    const iv = Buffer.from(rawIv)
 
     // update counter
     this._counter += 1
+
+    const actualContent = JSON.stringify({
+      data: data,
+      aad: this._counter
+    })
 
     const encryptor = crypto.createCipheriv(AES_ALGORITHM, key, iv)
     encryptor.setEncoding('hex')
@@ -44,13 +80,13 @@ export default class WalletConnect {
     return {
       data: encryptedData,
       hmac: hmac.digest('hex'),
-      nonce: this._counter,
+      aad: this._counter, // message counter for the "additional authenticated data"
       iv: iv.toString('hex')
     }
   }
 
   decrypt({data, hmac, nonce, iv}) {
-    const key = this._sharedKey
+    const key = this.sharedKey
     const ivBuffer = Buffer.from(iv, 'hex')
     const hmacBuffer = Buffer.from(hmac, 'hex')
 
@@ -67,17 +103,5 @@ export default class WalletConnect {
     const decryptor = crypto.createDecipheriv(AES_ALGORITHM, key, ivBuffer)
     const decryptedText = decryptor.update(data, 'hex', 'utf8')
     return decryptedText + decryptor.final('utf8')
-  }
-
-  setSharedKey(key) {
-    this._sharedKey = key
-  }
-
-  //
-  // static methods
-  //
-
-  static generateSharedKey(n = 32) {
-    return _generateKey(n)
   }
 }

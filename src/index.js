@@ -1,5 +1,5 @@
 import {generateKey} from './utils'
-import WalletConnect from './wallet'
+import WalletConnector from './wallet-connector'
+import WebConnector from './web-connector'
 
-export {generateKey}
-export default WalletConnect
+export {generateKey, WalletConnector, WebConnector}

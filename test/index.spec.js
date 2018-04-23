@@ -1,25 +1,24 @@
 /* global describe, it, before */
 
 import chai from 'chai'
-import WalletConnect from '../lib/walletconnect.js'
+
+import {generateKey, WalletConnector} from '../lib/walletconnect.js'
 
 chai.expect()
 
 const expect = chai.expect
 
 describe('Given an instance of wallet connect', () => {
-  let walletConnect
+  let walletConnector
 
-  before(() => {
-    walletConnect = new WalletConnect()
+  before(async() => {
+    const sharedKey = await generateKey()
+    walletConnector = new WalletConnector('http://localhost:3000', sharedKey)
   })
 
-  it('should initiate wallet connect properly', () => {
-    const sharedKey = WalletConnect.generateSharedKey()
-    walletConnect.setSharedKey(sharedKey)
-
-    const obj = walletConnect.encrypt(JSON.stringify({address: '0x123'}))
+  it('should initiate wallet connect properly', async() => {
+    const obj = await walletConnector.encrypt({address: '0x123'})
     console.log(obj)
-    console.log(walletConnect.decrypt(obj))
+    console.log(walletConnector.decrypt(obj))
   })
 })

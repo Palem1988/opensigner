@@ -1,5 +1,10 @@
 import crypto from 'crypto'
 
-export function generateKey(n = 128 / 8) {
-  return crypto.randomBytes(n)
+export async function generateKey(n = 256 / 8) {
+  const b = crypto.randomBytes(n)
+  let result = b
+  if (result instanceof Promise) {
+    result = await b
+  }
+  return result
 }
