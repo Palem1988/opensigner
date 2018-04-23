@@ -15,14 +15,19 @@ npm install --save walletconnect # yarn add walletconnect
 ```js
 import {generateKey, WalletConnector} from 'walletconnect'
 
-// create shared key
-const sharedKey = await generateKey()
+//
+// on DApp
+//
 
 // create wallet connector
 const walletConnector = new WalletConnector(
   'https://walletconnect.matic.network',
-  sharedKey
 )
+
+// create new session
+const session = await webConnector.createSession()
+console.log(session.sessionId) // prints session id
+console.log(walletconnect.sharedKey) // prints shared private key
 
 // data
 const data = {address: '0x0'}

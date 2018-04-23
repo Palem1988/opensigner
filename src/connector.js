@@ -16,7 +16,7 @@ export default class Connector {
     this._counter = 0
 
     // frisbee instance
-    this._frisbeeInstance = new Frisbee({
+    this.frisbeeInstance = new Frisbee({
       baseURI: url,
       headers: {
         Accept: 'application/json',
