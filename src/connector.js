@@ -1,7 +1,7 @@
 import crypto from 'crypto'
 import Frisbee from 'frisbee'
 
-import {generateKey} from './utils'
+import {generateKey, handleResponse} from './utils'
 
 const AES_ALGORITHM = 'AES-256-CBC'
 const HMAC_ALGORITHM = 'SHA256'
@@ -102,6 +102,27 @@ export default class Connector {
 
     const decryptor = crypto.createDecipheriv(AES_ALGORITHM, key, ivBuffer)
     const decryptedText = decryptor.update(data, 'hex', 'utf8')
-    return decryptedText + decryptor.final('utf8')
+    return JSON.parse(decryptedText + decryptor.final('utf8'))
+  }
+
+  //
+  // Private methods
+  //
+
+  //
+  // Get encryptedData remote data
+  //
+
+  async _getEncryptedData(url) {
+    const res = await this.frisbeeInstance.get(`/session/${this.sessionId}`)
+    handleResponse(res)
+
+    // check for no content
+    if (res.status === 204) {
+      return null
+    }
+
+    // decrypt data
+    return this.decrypt(res.body).data
   }
 }

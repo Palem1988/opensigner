@@ -8,3 +8,9 @@ export async function generateKey(n = 256 / 8) {
   }
   return result
 }
+
+export function handleResponse(res) {
+  if (res.status >= 400) {
+    throw new Error(res.statusText)
+  }
+}

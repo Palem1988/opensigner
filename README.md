@@ -13,14 +13,14 @@ npm install --save walletconnect # yarn add walletconnect
 ## Example
 
 ```js
-import {generateKey, WalletConnector} from 'walletconnect'
+import {WalletConnector, WebConnector} from 'walletconnect'
 
 //
 // on DApp
 //
 
 // create wallet connector
-const walletConnector = new WalletConnector(
+const webConnector = new WebConnector(
   'https://walletconnect.matic.network',
 )
 
@@ -29,12 +29,29 @@ const session = await webConnector.createSession()
 console.log(session.sessionId) // prints session id
 console.log(walletconnect.sharedKey) // prints shared private key
 
-// data
-const data = {address: '0x0'}
+// draft tx
+const tx = {from: '0xab12...1cd', to: '0x0', nonce: 1, gas: 100000, value: 0, data: '0x0'}
 
-// encrypted object
-const encryptedObj = await walletConnector.encrypt(data)
+// create transaction
+const transactionId = await webConnector.createTransaction(tx)
 
-// decrypted data
-const decrypted = walletConnector.decrypt(obj).data
+//
+// on wallet
+//
+
+// create wallet connector
+const walletConnector = new WalletConnector(
+  'https://walletconnect.matic.network',
+)
+
+// send transaction data
+walletConnector.sendSessionData({
+  address: '0xab12...1cd'
+})
+
+// send transaction status
+walletConnector.sendTransactionStatus({
+  success: true,
+  txHash: '0xabcd..873'
+})
 ```
