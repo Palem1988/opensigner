@@ -1,6 +1,6 @@
 {
   "name": "walletconnect",
-  "version": "0.0.1-beta.2",
+  "version": "0.0.1-beta.3",
   "description":
     "Library to connect with wallet-connect bridge server for browsers and node.js",
   "main": "lib/library.js",

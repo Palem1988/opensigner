@@ -3,9 +3,9 @@ import {handleResponse} from './utils'
 
 export default class WalletConnector extends Connector {
   //
-  // send session data
+  // send session status
   //
-  async sendSessionData(sessionId, sessionData = {}) {
+  async sendSessionStatus(sessionId, sessionData = {}) {
     if (!sessionId) {
       throw new Error('`sessionId` is required')
     }
@@ -19,13 +19,16 @@ export default class WalletConnector extends Connector {
     const encryptedData = await this.encrypt(data)
 
     // store transaction info on bridge
-    const res = await this.frisbeeInstance.put(`/session/${sessionId}`, {
-      body: {
-        fcmToken,
-        walletWebhook,
-        data: encryptedData
+    const res = await this.frisbeeInstance.post(
+      `/session/${sessionId}/status/new`,
+      {
+        body: {
+          fcmToken,
+          walletWebhook,
+          data: encryptedData
+        }
       }
-    })
+    )
     handleResponse(res)
     return true
   }
@@ -50,5 +53,29 @@ export default class WalletConnector extends Connector {
     )
     handleResponse(res)
     return true
+  }
+
+  //
+  // get session request data
+  //
+  async getSessionRequest(sessionId) {
+    if (!sessionId) {
+      throw new Error('sessionId is required')
+    }
+
+    return this._getEncryptedData(`/session/${this.sessionId}`)
+  }
+
+  //
+  // get transaction request data
+  //
+  async getTransactionRequest(sessionId, transactionId) {
+    if (!sessionId || !transactionId) {
+      throw new Error('sessionId and transactionId are required')
+    }
+
+    return this._getEncryptedData(
+      `/session/${this.sessionId}/transaction/${transactionId}`
+    )
   }
 }

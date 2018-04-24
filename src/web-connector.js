@@ -47,27 +47,14 @@ export default class WebConnector extends Connector {
   }
 
   //
-  // get session data
+  // get session status
   //
-  async getSessionData() {
+  async getSessionStatus() {
     if (!this.sessionId) {
       throw new Error('sessionId is required')
     }
 
-    return this._getEncryptedData(`/session/${this.sessionId}`)
-  }
-
-  //
-  // get transaction data
-  //
-  async getTransactionData(transactionId) {
-    if (!this.sessionId || !transactionId) {
-      throw new Error('sessionId and transactionId are required')
-    }
-
-    return this._getEncryptedData(
-      `/session/${this.sessionId}/transaction/${transactionId}`
-    )
+    return this._getEncryptedData(`/session/${this.sessionId}/status`)
   }
 
   //

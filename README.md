@@ -29,11 +29,17 @@ const session = await webConnector.createSession()
 console.log(session.sessionId) // prints session id
 console.log(walletconnect.sharedKey) // prints shared private key
 
+// fetch session status
+// const sessionStatus = await webConnector.getSessionStatus()
+
 // draft tx
 const tx = {from: '0xab12...1cd', to: '0x0', nonce: 1, gas: 100000, value: 0, data: '0x0'}
 
 // create transaction
 const transactionId = await webConnector.createTransaction(tx)
+
+// fetch tx status
+// const txStatus = await webConnector.getTransactionStatus()
 
 //
 // on wallet
@@ -45,7 +51,7 @@ const walletConnector = new WalletConnector(
 )
 
 // send transaction data
-walletConnector.sendSessionData({
+walletConnector.sendSessionStatus({
   address: '0xab12...1cd'
 })
 
