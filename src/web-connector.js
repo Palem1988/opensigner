@@ -18,8 +18,11 @@ export default class WebConnector extends Connector {
     // session id
     this.sessionId = res.body.sessionId
 
-    // return sessionId
-    return this.sessionId
+    // sessionId and shared key
+    return {
+      sessionId: this.sessionId,
+      sharedKey: this.sharedKey
+    }
   }
 
   //
