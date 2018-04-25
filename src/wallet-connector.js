@@ -41,7 +41,9 @@ export default class WalletConnector extends Connector {
     const res = await this.frisbeeInstance.post(
       `/session/${this.sessionId}/transaction/${transactionId}/status/new`,
       {
-        body: encryptedData
+        body: {
+          data: encryptedData
+        }
       }
     )
     handleResponse(res)

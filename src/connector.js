@@ -8,11 +8,14 @@ const AES_ALGORITHM = 'AES-256-CBC'
 const HMAC_ALGORITHM = 'SHA256'
 
 export default class Connector {
-  constructor(url, sessionId, key) {
+  constructor(url, options = {}) {
+    const {sessionId, sharedKey, dappName} = options
+
     // set bridge url, sessionId and key
     this.bridgeURL = url
     this.sessionId = sessionId
-    this.sharedKey = key
+    this.sharedKey = sharedKey
+    this.dappName = dappName
 
     // counter
     this._counter = 0
@@ -155,7 +158,7 @@ export default class Connector {
   //
 
   async _getEncryptedData(url) {
-    const res = await this.frisbeeInstance.get(`/session/${this.sessionId}`)
+    const res = await this.frisbeeInstance.get(url)
     handleResponse(res)
 
     // check for no content
@@ -164,6 +167,6 @@ export default class Connector {
     }
 
     // decrypt data
-    return this.decrypt(res.body).data
+    return this.decrypt(res.body.data).data
   }
 }
