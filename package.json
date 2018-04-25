@@ -1,25 +1,23 @@
 {
   "name": "walletconnect",
-  "version": "0.0.1-beta.7",
-  "description": "Library to connect with wallet-connect bridge server for browsers and node.js",
+  "version": "0.0.1-beta.8",
+  "description":
+    "Library to connect with wallet-connect bridge server for browsers and node.js",
   "main": "lib/walletconnect.js",
   "scripts": {
     "build": "webpack --env dev && webpack --env build && npm run test",
     "dev": "webpack --progress --colors --watch --env dev",
-    "test": "mocha --require babel-core/register --require babel-polyfill --colors ./test/*.spec.js",
-    "test:watch": "mocha --require babel-core/register --require babel-polyfill --colors -w ./test/*.spec.js",
+    "test":
+      "mocha --require babel-core/register --require babel-polyfill --colors ./test/*.spec.js",
+    "test:watch":
+      "mocha --require babel-core/register --require babel-polyfill --colors -w ./test/*.spec.js",
     "lint": "eslint src/"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/maticnetwork/walletconnect.git"
   },
-  "keywords": [
-    "wallet",
-    "react-native",
-    "walletconnect",
-    "react"
-  ],
+  "keywords": ["wallet", "react-native", "walletconnect", "react"],
   "author": "Jaynti Kanani <jdkanani@gmail.com>",
   "license": "MIT",
   "bugs": {
@@ -31,9 +29,6 @@
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.2",
     "babel-loader": "^7.1.4",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
     "babel-polyfill": "^6.26.0",
     "chai": "^4.1.2",
     "eslint": "^4.13.1",
@@ -49,6 +44,9 @@
     "yargs": "^10.0.3"
   },
   "dependencies": {
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "frisbee": "^1.6.4",
     "safe-buffer": "^5.1.1",
     "xhr2": "^0.1.4"
