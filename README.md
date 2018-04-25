@@ -32,6 +32,11 @@ console.log(session.sharedKey.toString('hex')) // prints shared private key
 // fetch session status
 // const sessionStatus = await webConnector.getSessionStatus()
 
+// listen status
+webConnector.listenSessionStatus((err, result) => {
+  // check result
+})
+
 // draft tx
 const tx = {from: '0xab12...1cd', to: '0x0', nonce: 1, gas: 100000, value: 0, data: '0x0'}
 
@@ -41,6 +46,11 @@ const transactionId = await webConnector.createTransaction(tx)
 // fetch tx status
 // const txStatus = await webConnector.getTransactionStatus()
 
+// listen status
+webConnector.listenTransactionStatus(transactionId, (err, result) => {
+  // check result
+})
+
 //
 // on wallet
 //
@@ -48,8 +58,11 @@ const transactionId = await webConnector.createTransaction(tx)
 // create wallet connector
 const walletConnector = new WalletConnector(
   'https://walletconnect.matic.network',
-  session.sessionId,
-  session.sharedKey
+  {
+    sessionId: session.sessionId,
+    sharedKey: session.sharedKey,
+    dappName: 'Matic wallet'
+  }
 )
 
 // send transaction data

@@ -129,7 +129,7 @@ export default class WebConnector extends Connector {
   //
   // Listen for session status
   //
-  listenForSessionStatus(cb, pollInterval = 1000, timeout = 60000) {
+  listenSessionStatus(cb, pollInterval = 1000, timeout = 60000) {
     return new Listener(this, {
       fn: () => {
         return this.getSessionStatus()
