@@ -5,11 +5,7 @@ export default class WalletConnector extends Connector {
   //
   // send session status
   //
-  async sendSessionStatus(sessionId, sessionData = {}) {
-    if (!sessionId) {
-      throw new Error('`sessionId` is required')
-    }
-
+  async sendSessionStatus(sessionData = {}) {
     const {fcmToken, walletWebhook, data = {}} = sessionData
     if (!fcmToken || !walletWebhook) {
       throw new Error('fcmToken and walletWebhook are required')
@@ -19,16 +15,13 @@ export default class WalletConnector extends Connector {
     const encryptedData = await this.encrypt(data)
 
     // store transaction info on bridge
-    const res = await this.frisbeeInstance.post(
-      `/session/${sessionId}/status/new`,
-      {
-        body: {
-          fcmToken,
-          walletWebhook,
-          data: encryptedData
-        }
+    const res = await this.frisbeeInstance.put(`/session/${this.sessionId}`, {
+      body: {
+        fcmToken,
+        walletWebhook,
+        data: encryptedData
       }
-    )
+    })
     handleResponse(res)
     return true
   }
@@ -36,9 +29,9 @@ export default class WalletConnector extends Connector {
   //
   // send transaction status
   //
-  async sendTransactionStatus(sessionId, transactionId, statusData = {}) {
-    if (!sessionId || !transactionId) {
-      throw new Error('`sessionId` and `transactionId` are required')
+  async sendTransactionStatus(transactionId, statusData = {}) {
+    if (!transactionId) {
+      throw new Error('`transactionId` is required')
     }
 
     // encrypt data
@@ -46,7 +39,7 @@ export default class WalletConnector extends Connector {
 
     // store transaction info on bridge
     const res = await this.frisbeeInstance.post(
-      `/session/${sessionId}/transaction/${transactionId}/status/new`,
+      `/session/${this.sessionId}/transaction/${transactionId}/status/new`,
       {
         body: encryptedData
       }
@@ -58,20 +51,16 @@ export default class WalletConnector extends Connector {
   //
   // get session request data
   //
-  async getSessionRequest(sessionId) {
-    if (!sessionId) {
-      throw new Error('sessionId is required')
-    }
-
-    return this._getEncryptedData(`/session/${this.sessionId}`)
-  }
+  // async getSessionRequest() {
+  //   return this._getEncryptedData(`/session/${this.sessionId}`)
+  // }
 
   //
   // get transaction request data
   //
-  async getTransactionRequest(sessionId, transactionId) {
-    if (!sessionId || !transactionId) {
-      throw new Error('sessionId and transactionId are required')
+  async getTransactionRequest(transactionId) {
+    if (!transactionId) {
+      throw new Error('transactionId is required')
     }
 
     return this._getEncryptedData(

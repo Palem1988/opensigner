@@ -27,7 +27,7 @@ const webConnector = new WebConnector(
 // create new session
 const session = await webConnector.createSession()
 console.log(session.sessionId) // prints session id
-console.log(walletconnect.sharedKey) // prints shared private key
+console.log(session.sharedKey.toString('hex')) // prints shared private key
 
 // fetch session status
 // const sessionStatus = await webConnector.getSessionStatus()
@@ -48,6 +48,8 @@ const transactionId = await webConnector.createTransaction(tx)
 // create wallet connector
 const walletConnector = new WalletConnector(
   'https://walletconnect.matic.network',
+  session.sessionId,
+  session.sharedKey
 )
 
 // send transaction data

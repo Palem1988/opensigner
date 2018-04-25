@@ -1,5 +1,6 @@
 import crypto from 'crypto'
 import Frisbee from 'frisbee'
+import {Buffer} from 'buffer'
 
 import {generateKey, handleResponse} from './utils'
 
@@ -7,9 +8,10 @@ const AES_ALGORITHM = 'AES-256-CBC'
 const HMAC_ALGORITHM = 'SHA256'
 
 export default class Connector {
-  constructor(url, key) {
-    // set bridge url and key
+  constructor(url, sessionId, key) {
+    // set bridge url, sessionId and key
     this.bridgeURL = url
+    this.sessionId = sessionId
     this.sharedKey = key
 
     // counter
@@ -29,20 +31,59 @@ export default class Connector {
     return this._bridgeURL
   }
 
-  set bridgeURL(url) {
-    this._bridgeURL = url
+  set bridgeURL(value) {
+    if (this.bridgeURL) {
+      throw new Error('bridgeURL already set')
+    }
+
+    if (!value) {
+      return
+    }
+
+    this._bridgeURL = value
   }
 
   get sharedKey() {
-    return this._sharedKey
+    if (this._sharedKey) {
+      return this._sharedKey.toString('hex')
+    }
+
+    return null
   }
 
-  set sharedKey(key) {
-    this._sharedKey = key
+  set sharedKey(value) {
+    if (this.sharedKey) {
+      throw new Error('sharedKey already set')
+    }
+
+    if (!value) {
+      return
+    }
+
+    const v = Buffer.from(value.toString('hex'), 'hex')
+    this._sharedKey = v
+  }
+
+  // getter for session id
+  get sessionId() {
+    return this._sessionId
+  }
+
+  // setter for sessionId
+  set sessionId(value) {
+    if (this.sessionId) {
+      throw new Error('sessionId already set')
+    }
+
+    if (!value) {
+      return
+    }
+
+    this._sessionId = value
   }
 
   async encrypt(data, customIv = null) {
-    const key = this.sharedKey
+    const key = this._sharedKey
     if (!key) {
       throw new Error(
         'Shared key is required. Please use `sharedKey` before using encryption'
@@ -86,7 +127,7 @@ export default class Connector {
   }
 
   decrypt({data, hmac, nonce, iv}) {
-    const key = this.sharedKey
+    const key = this._sharedKey
     const ivBuffer = Buffer.from(iv, 'hex')
     const hmacBuffer = Buffer.from(hmac, 'hex')
 

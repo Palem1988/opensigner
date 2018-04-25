@@ -6,6 +6,10 @@ export default class WebConnector extends Connector {
   // Create session
   //
   async createSession() {
+    if (this.sessionId) {
+      throw new Error('session already created')
+    }
+
     // create shared key
     if (!this.sharedKey) {
       this.sharedKey = await generateKey()
@@ -57,7 +61,7 @@ export default class WebConnector extends Connector {
       throw new Error('sessionId is required')
     }
 
-    return this._getEncryptedData(`/session/${this.sessionId}/status`)
+    return this._getEncryptedData(`/session/${this.sessionId}`)
   }
 
   //
@@ -71,15 +75,5 @@ export default class WebConnector extends Connector {
     return this._getEncryptedData(
       `/session/${this.sessionId}/transaction/${transactionId}/status`
     )
-  }
-
-  // getter for session id
-  get sessionId() {
-    return this._sessionId
-  }
-
-  // setter for sessionId
-  set sessionId(value) {
-    this._sessionId = value
   }
 }

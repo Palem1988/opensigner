@@ -1,23 +1,25 @@
 {
   "name": "walletconnect",
-  "version": "0.0.1-beta.5",
-  "description":
-    "Library to connect with wallet-connect bridge server for browsers and node.js",
+  "version": "0.0.1-beta.6",
+  "description": "Library to connect with wallet-connect bridge server for browsers and node.js",
   "main": "lib/walletconnect.js",
   "scripts": {
     "build": "webpack --env dev && webpack --env build && npm run test",
     "dev": "webpack --progress --colors --watch --env dev",
-    "test":
-      "mocha --require @babel/register --require babel-polyfill --colors ./test/*.spec.js",
-    "test:watch":
-      "mocha --require @babel/register --require babel-polyfill --colors -w ./test/*.spec.js",
+    "test": "mocha --require babel-core/register --require babel-polyfill --colors ./test/*.spec.js",
+    "test:watch": "mocha --require babel-core/register --require babel-polyfill --colors -w ./test/*.spec.js",
     "lint": "eslint src/"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/maticnetwork/walletconnect.git"
   },
-  "keywords": ["wallet", "react-native", "walletconnect", "react"],
+  "keywords": [
+    "wallet",
+    "react-native",
+    "walletconnect",
+    "react"
+  ],
   "author": "Jaynti Kanani <jdkanani@gmail.com>",
   "license": "MIT",
   "bugs": {
@@ -25,13 +27,13 @@
   },
   "homepage": "https://github.com/maticnetwork/walletconnect",
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.46",
-    "@babel/core": "^7.0.0-beta.46",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.46",
-    "@babel/preset-env": "^7.0.0-beta.46",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.3",
-    "babel-loader": "^8.0.0-beta.2",
+    "babel-loader": "^7.1.2",
     "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "babel-polyfill": "^6.26.0",
     "chai": "^4.1.2",
     "eslint": "^4.13.1",
@@ -47,8 +49,8 @@
     "yargs": "^10.0.3"
   },
   "dependencies": {
-    "@babel/register": "^7.0.0-beta.46",
     "frisbee": "^1.6.4",
+    "safe-buffer": "^5.1.1",
     "xhr2": "^0.1.4"
   }
 }
