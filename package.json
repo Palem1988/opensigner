@@ -1,13 +1,16 @@
 {
   "name": "walletconnect",
-  "version": "0.0.1-beta.9",
-  "description": "Library to connect with wallet-connect bridge server for browsers and node.js",
+  "version": "0.0.1-beta.10",
+  "description":
+    "Library to connect with wallet-connect bridge server for browsers and node.js",
   "main": "lib/walletconnect.js",
   "scripts": {
     "build": "webpack --env dev && webpack --env build && npm run test",
     "dev": "webpack --progress --colors --watch --env dev",
-    "test": "mocha --require babel-core/register --require babel-polyfill --colors ./test/*.spec.js",
-    "test:watch": "mocha --require babel-core/register --require babel-polyfill --colors -w ./test/*.spec.js",
+    "test":
+      "mocha --require babel-core/register --require babel-polyfill --colors ./test/*.spec.js",
+    "test:watch":
+      "mocha --require babel-core/register --require babel-polyfill --colors -w ./test/*.spec.js",
     "lint": "eslint src/"
   },
   "repository": {
@@ -18,7 +21,9 @@
     "wallet",
     "react-native",
     "walletconnect",
-    "react"
+    "react",
+    "ethereum",
+    "dapp"
   ],
   "author": "Jaynti Kanani <jdkanani@gmail.com>",
   "license": "MIT",
