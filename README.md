@@ -1,6 +1,6 @@
 # WalletConnect
 
-Simple library to connect with wallet-connect's bridge server. Works with browsers, node.js and react-native.
+Simple library to connect with wallet-connect's bridge server. Works with browsers and react-native.
 
 You can read more about WalletConnect protocol here: http://walletconnect.org/
 
@@ -9,6 +9,10 @@ You can read more about WalletConnect protocol here: http://walletconnect.org/
 ```bash
 npm install --save walletconnect # yarn add walletconnect
 ```
+
+**Extra step for react-native**
+
+It needs [rn-nodify](https://github.com/tradle/rn-nodeify)'s `crypto` package for encryption and decryption.
 
 ## Example
 
