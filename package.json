@@ -1,6 +1,6 @@
 {
   "name": "walletconnect",
-  "version": "0.0.1-beta.10",
+  "version": "0.0.1-beta.11",
   "description":
     "Library to connect with wallet-connect bridge server for browsers and node.js",
   "main": "lib/walletconnect.js",
@@ -8,9 +8,9 @@
     "build": "webpack --env dev && webpack --env build && npm run test",
     "dev": "webpack --progress --colors --watch --env dev",
     "test":
-      "mocha --require babel-core/register --require babel-polyfill --colors ./test/*.spec.js",
+      "mocha --require babel-core/register --require idempotent-babel-polyfill --colors ./test/*.spec.js",
     "test:watch":
-      "mocha --require babel-core/register --require babel-polyfill --colors -w ./test/*.spec.js",
+      "mocha --require babel-core/register --require idempotent-babel-polyfill --colors -w ./test/*.spec.js",
     "lint": "eslint src/"
   },
   "repository": {
@@ -55,6 +55,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "frisbee": "^1.6.4",
+    "idempotent-babel-polyfill": "^0.1.1",
     "safe-buffer": "^5.1.1",
     "xhr2": "^0.1.4"
   }
