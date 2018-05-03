@@ -1,6 +1,6 @@
 {
   "name": "walletconnect",
-  "version": "0.0.1-beta.11",
+  "version": "0.0.1-beta.12",
   "description":
     "Library to connect with wallet-connect bridge server for browsers and node.js",
   "main": "lib/walletconnect.js",
@@ -47,6 +47,7 @@
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.0.1",
     "mocha": "^4.0.1",
+    "node-fetch": "^2.1.2",
     "webpack": "^3.10.0",
     "yargs": "^10.0.3"
   },
@@ -54,7 +55,6 @@
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
-    "frisbee": "^1.6.4",
     "idempotent-babel-polyfill": "^0.1.1",
     "safe-buffer": "^5.1.1",
     "xhr2": "^0.1.4"

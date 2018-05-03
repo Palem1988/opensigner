@@ -15,12 +15,17 @@ export default class WalletConnector extends Connector {
     const encryptedData = await this.encrypt(data)
 
     // store transaction info on bridge
-    const res = await this.frisbeeInstance.put(`/session/${this.sessionId}`, {
-      body: {
+    const res = await fetch(`${this.bridgeURL}/session/${this.sessionId}`, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
         fcmToken,
         walletWebhook,
         data: encryptedData
-      }
+      })
     })
     handleResponse(res)
     return true
@@ -38,12 +43,19 @@ export default class WalletConnector extends Connector {
     const encryptedData = await this.encrypt(statusData)
 
     // store transaction info on bridge
-    const res = await this.frisbeeInstance.post(
-      `/session/${this.sessionId}/transaction/${transactionId}/status/new`,
+    const res = await fetch(
+      `${this.bridgeURL}/session/${
+        this.sessionId
+      }/transaction/${transactionId}/status/new`,
       {
-        body: {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
           data: encryptedData
-        }
+        })
       }
     )
     handleResponse(res)

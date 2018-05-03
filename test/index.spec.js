@@ -1,5 +1,6 @@
 /* global describe, it, before */
 
+import fetch from 'node-fetch'
 import XMLHttpRequest from 'xhr2'
 import chai from 'chai'
 
@@ -7,6 +8,7 @@ import {generateKey, WalletConnector, WebConnector} from '../src'
 
 // set fetch
 global.XMLHttpRequest = XMLHttpRequest
+global.fetch = fetch
 
 chai.expect()
 

@@ -1,5 +1,4 @@
 import crypto from 'crypto'
-import Frisbee from 'frisbee'
 import {Buffer} from 'buffer'
 
 import {generateKey, handleResponse} from './utils'
@@ -19,15 +18,6 @@ export default class Connector {
 
     // counter
     this._counter = 0
-
-    // frisbee instance
-    this.frisbeeInstance = new Frisbee({
-      baseURI: url,
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      }
-    })
   }
 
   get bridgeURL() {
@@ -158,15 +148,25 @@ export default class Connector {
   //
 
   async _getEncryptedData(url) {
-    const res = await this.frisbeeInstance.get(url)
-    handleResponse(res)
+    const res = await fetch(`${this.bridgeURL}${url}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
 
     // check for no content
     if (res.status === 204) {
       return null
     }
 
+    handleResponse(res)
+
+    // get body
+    const body = await res.json()
+
     // decrypt data
-    return this.decrypt(res.body.data).data
+    return this.decrypt(body.data).data
   }
 }

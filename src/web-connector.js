@@ -17,11 +17,19 @@ export default class WebConnector extends Connector {
     }
 
     // store session info on bridge
-    const res = await this.frisbeeInstance.post('/session/new')
+    const res = await fetch(`${this.bridgeURL}/session/new`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
     handleResponse(res)
 
+    // get json
+    const body = await res.json()
     // session id
-    this.sessionId = res.body.sessionId
+    this.sessionId = body.sessionId
 
     // sessionId and shared key
     return {
@@ -44,20 +52,28 @@ export default class WebConnector extends Connector {
     const encryptedData = await this.encrypt(data)
 
     // store transaction info on bridge
-    const res = await this.frisbeeInstance.post(
-      `/session/${this.sessionId}/transaction/new`,
+    const res = await fetch(
+      `${this.bridgeURL}/session/${this.sessionId}/transaction/new`,
       {
-        body: {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
           data: encryptedData,
           dappName: this.dappName
-        }
+        })
       }
     )
     handleResponse(res)
 
+    // res
+    const body = await res.json()
+
     // return transactionId
     return {
-      transactionId: res.body.transactionId
+      transactionId: body.transactionId
     }
   }
 
