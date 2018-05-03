@@ -71,7 +71,11 @@ const walletConnector = new WalletConnector(
 
 // send transaction data
 walletConnector.sendSessionStatus({
-  address: '0xab12...1cd'
+  fcmToken: '12354...3adc',  // fcm token,
+  walletWebhook: 'https://walletconnect.matic.network/notification/new',  // wallet webhook
+  data: {
+    address: '0xab12...1cd' // address fetched from phrase
+  }
 })
 
 // send transaction status
