@@ -14,18 +14,15 @@ npm install --save walletconnect # yarn add walletconnect
 
 It needs [rn-nodify](https://github.com/tradle/rn-nodeify)'s `crypto` package for encryption and decryption.
 
-## Example
+## Browser Dapp Example
 
 ```js
-import {WalletConnector, WebConnector} from 'walletconnect'
+import {WebConnector} from 'walletconnect'
 
-//
-// on DApp
-//
-
-// create wallet connector
+// create web connector given bridgeDomain and dappName
 const webConnector = new WebConnector(
-  'https://walletconnect.matic.network',
+  bridgeDomain, // e.g, 'https://walletconnect.matic.network'
+  { dappName: dappName }
 )
 
 // create new session
@@ -38,7 +35,12 @@ console.log(session.sharedKey.toString('hex')) // prints shared private key
 
 // listen status
 webConnector.listenSessionStatus((err, result) => {
-  // check result
+  if (error) {
+    // handle error
+  } else if (result) {
+    const accountAddress = result.address;
+    // handle account address
+  }
 })
 
 // draft tx
@@ -47,17 +49,28 @@ const tx = {from: '0xab12...1cd', to: '0x0', nonce: 1, gas: 100000, value: 0, da
 // create transaction
 const transactionId = await webConnector.createTransaction(tx)
 
-// fetch tx status
-// const txStatus = await webConnector.getTransactionStatus()
-
-// listen status
+// listen for tx status
 webConnector.listenTransactionStatus(transactionId, (err, result) => {
-  // check result
+  if (err) {
+    // handle error
+  } else if (result) {
+    const success = result.success;
+    if (success) {
+      const txHash = result.txHash;
+      // handle txHash
+    }
+  }
 })
 
-//
-// on wallet
-//
+// alternatively, single call to fetch tx status (client responsible for polling)
+const txStatus = await webConnector.getTransactionStatus()
+```
+
+
+## Mobile Wallet Example
+
+```js
+import {WalletConnector} from 'walletconnect'
 
 // create wallet connector
 const walletConnector = new WalletConnector(
