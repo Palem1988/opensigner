@@ -69,8 +69,8 @@ const walletConnector = new WalletConnector(
   }
 )
 
-// send transaction data
-walletConnector.sendSessionStatus({
+// send session data
+const success = await walletConnector.sendSessionStatus({
   fcmToken: '12354...3adc',  // fcm token,
   walletWebhook: 'https://walletconnect.matic.network/notification/new',  // wallet webhook
   data: {
@@ -78,8 +78,11 @@ walletConnector.sendSessionStatus({
   }
 })
 
+// get transaction data (assuming mobile client received transactionId from a push notification)
+const transactionData = await walletConnector.getTransactionRequest(transactionId);
+
 // send transaction status
-walletConnector.sendTransactionStatus({
+const success = await walletConnector.sendTransactionStatus(transactionId, {
   success: true,
   txHash: '0xabcd..873'
 })
