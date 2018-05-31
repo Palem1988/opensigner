@@ -1,26 +1,23 @@
 {
-  "name": "walletconnect",
+  "name": "opensigner",
   "version": "0.0.1-beta.12",
-  "description":
-    "Library to connect with wallet-connect bridge server for browsers and node.js",
-  "main": "lib/walletconnect.js",
+  "description": "Library to connect with opensigner bridge server for browsers and node.js",
+  "main": "lib/opensigner.js",
   "scripts": {
     "build": "webpack --env dev && webpack --env build && npm run test",
     "dev": "webpack --progress --colors --watch --env dev",
-    "test":
-      "mocha --require babel-core/register --require idempotent-babel-polyfill --colors ./test/*.spec.js",
-    "test:watch":
-      "mocha --require babel-core/register --require idempotent-babel-polyfill --colors -w ./test/*.spec.js",
+    "test": "mocha --require babel-core/register --require idempotent-babel-polyfill --colors ./test/*.spec.js",
+    "test:watch": "mocha --require babel-core/register --require idempotent-babel-polyfill --colors -w ./test/*.spec.js",
     "lint": "eslint src/"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/maticnetwork/walletconnect.git"
+    "url": "https://github.com/opensigner/opensigner.git"
   },
   "keywords": [
     "wallet",
     "react-native",
-    "walletconnect",
+    "opensigner",
     "react",
     "ethereum",
     "dapp"
@@ -28,9 +25,9 @@
   "author": "Jaynti Kanani <jdkanani@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/maticnetwork/walletconnect/issues"
+    "url": "https://github.com/opensigner/opensigner/issues"
   },
-  "homepage": "https://github.com/maticnetwork/walletconnect",
+  "homepage": "https://github.com/opensigner/opensigner",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
