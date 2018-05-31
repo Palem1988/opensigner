@@ -1,13 +1,11 @@
-# WalletConnect
+# OpenSigner
 
-Simple library to connect with wallet-connect's bridge server. Works with browsers and react-native.
-
-You can read more about WalletConnect protocol here: http://walletconnect.org/
+Simple library to connect with opensigner's bridge server. Works with browsers and react-native.
 
 ## install
 
 ```bash
-npm install --save walletconnect # yarn add walletconnect
+npm install --save opensigner # yarn add opensigner
 ```
 
 **Extra step for react-native**
@@ -21,7 +19,7 @@ import {WebConnector} from 'walletconnect'
 
 // create web connector given bridgeDomain and dappName
 const webConnector = new WebConnector(
-  bridgeDomain, // e.g, 'https://walletconnect.matic.network'
+  'https://opensigner.matic.network',
   { dappName: dappName }
 )
 
@@ -74,7 +72,7 @@ import {WalletConnector} from 'walletconnect'
 
 // create wallet connector
 const walletConnector = new WalletConnector(
-  'https://walletconnect.matic.network',
+  'https://opensigner.matic.network',
   {
     sessionId: session.sessionId,
     sharedKey: session.sharedKey,
@@ -85,7 +83,7 @@ const walletConnector = new WalletConnector(
 // send session data
 const success = await walletConnector.sendSessionStatus({
   fcmToken: '12354...3adc',  // fcm token,
-  walletWebhook: 'https://walletconnect.matic.network/notification/new',  // wallet webhook
+  walletWebhook: 'https://opensigner.matic.network/notification/new',  // wallet webhook
   data: {
     address: '0xab12...1cd' // address fetched from phrase
   }
