@@ -12,18 +12,15 @@ npm install --save opensigner # yarn add opensigner
 
 It needs [rn-nodify](https://github.com/tradle/rn-nodeify)'s `crypto` package for encryption and decryption.
 
-## Example
+## Browser Dapp Example
 
 ```js
-import {WalletConnector, WebConnector} from 'opensigner'
+import {WebConnector} from 'walletconnect'
 
-//
-// on DApp
-//
-
-// create wallet connector
+// create web connector given bridgeDomain and dappName
 const webConnector = new WebConnector(
   'https://opensigner.matic.network',
+  { dappName: dappName }
 )
 
 // create new session
@@ -36,7 +33,12 @@ console.log(session.sharedKey.toString('hex')) // prints shared private key
 
 // listen status
 webConnector.listenSessionStatus((err, result) => {
-  // check result
+  if (error) {
+    // handle error
+  } else if (result) {
+    const accountAddress = result.address;
+    // handle account address
+  }
 })
 
 // draft tx
@@ -45,17 +47,28 @@ const tx = {from: '0xab12...1cd', to: '0x0', nonce: 1, gas: 100000, value: 0, da
 // create transaction
 const transactionId = await webConnector.createTransaction(tx)
 
-// fetch tx status
-// const txStatus = await webConnector.getTransactionStatus()
-
-// listen status
+// listen for tx status
 webConnector.listenTransactionStatus(transactionId, (err, result) => {
-  // check result
+  if (err) {
+    // handle error
+  } else if (result) {
+    const success = result.success;
+    if (success) {
+      const txHash = result.txHash;
+      // handle txHash
+    }
+  }
 })
 
-//
-// on wallet
-//
+// alternatively, single call to fetch tx status (client responsible for polling)
+const txStatus = await webConnector.getTransactionStatus()
+```
+
+
+## Mobile Wallet Example
+
+```js
+import {WalletConnector} from 'walletconnect'
 
 // create wallet connector
 const walletConnector = new WalletConnector(
@@ -67,8 +80,8 @@ const walletConnector = new WalletConnector(
   }
 )
 
-// send transaction data
-walletConnector.sendSessionStatus({
+// send session data
+const success = await walletConnector.sendSessionStatus({
   fcmToken: '12354...3adc',  // fcm token,
   walletWebhook: 'https://opensigner.matic.network/notification/new',  // wallet webhook
   data: {
@@ -76,8 +89,11 @@ walletConnector.sendSessionStatus({
   }
 })
 
+// get transaction data (assuming mobile client received transactionId from a push notification)
+const transactionData = await walletConnector.getTransactionRequest(transactionId);
+
 // send transaction status
-walletConnector.sendTransactionStatus({
+const success = await walletConnector.sendTransactionStatus(transactionId, {
   success: true,
   txHash: '0xabcd..873'
 })
